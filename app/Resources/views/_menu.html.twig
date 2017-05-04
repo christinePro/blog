@@ -3,3 +3,11 @@
   <li role ="presentation" {{ app.request.get('_route') == 'homepage' ? 'class="active"'}}  >
     <a href="{{path('homepage')}}">Homepage</a>
   </li>
+
+
+    <li role ="presentation" {{ app.request.get('_route') == 'blog_post' ? 'class="active"'}}  >
+      <a href="{{path('blog_post', {'name': 'blogpost'}) }}">Blog Post</a>
+    </li>
+
+    
+  </ul>

@@ -1,13 +1,26 @@
-
-<ul class="nav nav-pills" style="background:{{ color|default('pink') }};padding:1em;">
+<div class=col-ml-12 col-ml-offset12>
+<ul class="nav nav-pills" style="background:{{ color|default('#2b2515') }};padding:1em;">
   <li role ="presentation" {{ app.request.get('_route') == 'homepage' ? 'class="active"'}}  >
     <a href="{{path('homepage')}}">Homepage</a>
   </li>
 
 
-    <li role ="presentation" {{ app.request.get('_route') == 'blog_post' ? 'class="active"'}}  >
-      <a href="{{path('blog_post', {'name': 'blogpost'}) }}">Blog Post</a>
+    <li role ="presentation" {{ app.request.get('_route') == 'blog' ? 'class="active"'}}  >
+      <a href="{{path('blog', {'name': 'blog'}) }}">Blog Post</a>
     </li>
 
-    
+
+    {% if app.user %}
+        <li role="presentation">
+            <a href="{{ path('logout') }}">Logout</a>
+        </li>
+    {% else %}
+        <li role="presentation"{{ app.request.get('_route') == 'login' ? ' class="active"' }}>
+            <a href="{{ path('login') }}">Login</a>
+        </li>
+    {% endif %}
+
+
   </ul>
+
+  </div>

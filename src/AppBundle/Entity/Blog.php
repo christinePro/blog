@@ -38,9 +38,16 @@ class Blog
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="publishAt", type="datetime")
+     * @ORM\Column(name="publishAt", type="datetime", length=255)
      */
     private $publishAt;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="isProcessed", type="boolean")
+     */
+    private $isProcessed;
 
 
     /**
@@ -123,5 +130,29 @@ class Blog
     public function getPublishAt()
     {
         return $this->publishAt;
+    }
+
+    /**
+     * Set isProcessed
+     *
+     * @param boolean $isProcessed
+     *
+     * @return Blog
+     */
+    public function setIsProcessed($isProcessed)
+    {
+        $this->isProcessed = $isProcessed;
+
+        return $this;
+    }
+
+    /**
+     * Get isProcessed
+     *
+     * @return bool
+     */
+    public function getIsProcessed()
+    {
+        return $this->isProcessed;
     }
 }

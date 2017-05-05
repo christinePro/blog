@@ -10,4 +10,17 @@ namespace AppBundle\Repository;
  */
 class BlogRepository extends \Doctrine\ORM\EntityRepository
 {
+
+  public function  findAllForList()
+  {
+    $qb = $this->createQueryBuilder('c');
+    $qb
+      -> Select('c')
+      ->addOrderBy('c.PublishAt', 'DESC')
+      ;
+      return $qb->getQuery()->getResult();
+  }
+
+
+
 }

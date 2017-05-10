@@ -6,7 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-//use AppBundle\Model\Contact;
+//use AppBundle\Model\Blog;
 use AppBundle\Entity\Blog;
 use AppBundle\Form\Type\BlogType;
 
@@ -40,5 +40,52 @@ class BlogController extends Controller
 
      return $this ->render('blog/blog.html.twig',['form'=> $form-> createView(),]);
    }
+
+
+   /**
+    * @Route("/admin/blog/list", name="blog_list")
+    */
+   public function listAction()
+   {
+       $em = $this->get('doctrine.orm.entity_manager');
+       $repository = $em->getRepository(Blog::class);
+
+       // $contacts = $repository->findAll();
+       $blogs = $repository->findAllForList();
+
+       return $this->render('blog/list.html.twig', [
+           'blogs' => $blogs,
+       ]);
+   }
+
+    /**
+     * @Route("/admin/blog/{id}/", name="blog_show")
+     */
+    public function showAction(Blog $blog)
+    {
+        return $this->render('blog/show.html.twig', [
+            'blog' => $blog,
+        ]);
+    }
+
+    /**
+     * @Route("/admin/blog/{id}/mark-as-processed", name="blog_mark_as_processed")
+     */
+    public function markAsProcessedAction(Blog $blog)
+    {
+        if ($blog->isProcessed()) {
+            $this->addFlash('error', 'This blog is already marked as processed.');
+        } else {
+            $blog->setIsProcessed(true);
+            $this->addFlash('success', 'This blog has been marked as processed!');
+
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('blog_show', [
+            'id' => $blog->getId(),
+        ]);
+    }
 
 }

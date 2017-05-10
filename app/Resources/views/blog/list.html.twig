@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contacts{% endblock %}
+
+{% block body %}
+<h1>Contacts</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>TITLE</th>
+            <th>CONTENT</th>
+            <th>PUBLISH AT</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th colspan="5">Need to be processed</th>
+        </tr>
+        {% for blog in blogs if not blog.isProcessed %}
+            <tr>
+                <td>{{ blog.title }}</td>
+                <td>{{ blog.content }}</td>
+                <td>{{ blog.publishAt|date('Y-m-d H:i:s') }}</td>
+                <td><a href="{{ path('blog_show', {'id': blog.id}) }}" class="btn btn-primary">View Blog request</a></td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <th colspan="5">Already processed</th>
+        </tr>
+        {% for blog in blogs if blog.isProcessed %}
+            <tr>
+                <td>{{ blog.title}}</td>
+                <td>{{ blog.content}}</td>
+                <td>{{ blog.publishAt|date('Y-m-d H:i:s') }}</td>
+                <td><a href="{{ path('blog_show', {'id': blog.id}) }}" class="btn btn-primary">View blog request</a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock body %}

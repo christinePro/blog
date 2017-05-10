@@ -10,6 +10,13 @@
     </li>
 
 
+    {% if is_granted('ROLE_ADMIN') %}
+        <li role="presentation"{{ app.request.get('_route') == 'blog_list' ? ' class="active"' }}>
+            <a href="{{ path('blog_list') }}">Blog</a>
+        </li>
+    {% endif %}
+
+
     {% if app.user %}
         <li role="presentation">
             <a href="{{ path('logout') }}">Logout</a>

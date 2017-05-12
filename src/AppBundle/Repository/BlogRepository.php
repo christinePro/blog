@@ -16,7 +16,7 @@ class BlogRepository extends \Doctrine\ORM\EntityRepository
     $qb = $this->createQueryBuilder('c');
     $qb
       -> Select('c')
-      ->addOrderBy('c.PublishAt', 'DESC')
+      ->addOrderBy('c.publishAt', 'DESC')
       ;
       return $qb->getQuery()->getResult();
   }

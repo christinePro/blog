@@ -58,6 +58,7 @@ class BlogController extends Controller
        ]);
    }
 
+
     /**
      * @Route("/admin/blog/{id}/", name="blog_show")
      */

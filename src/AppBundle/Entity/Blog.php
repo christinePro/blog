@@ -151,8 +151,8 @@ class Blog
      *
      * @return bool
      */
-    public function getIsProcessed()
+    public function isProcessed()
     {
-        return $this->isProcessed;
+        return (bool) $this->isProcessed;
     }
 }

@@ -4,4 +4,23 @@
 <h1> homepage </h1>
 {{include ('_menu.html.twig', {'color' : '#2b2515'}) }}
 <p> Welcome here!</p>
+{% for blog in blogs if blog.isProcessed %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>TITLE</th>
+            <th>CONTENT</th>
+            <th>PUBLISH AT</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        <td>{{ blog.title}}</td>
+        <td>{{ blog.content}}</td>
+        <td>{{ blog.publishAt|date('Y-m-d H:i:s') }}</td>
+        <td><a href="{{ path('blog_show', {'id': blog.id}) }}" class="btn btn-primary">View blog content</a></td>
+    </tr>
+    </tbody>
+{% endfor %}
 {% endblock body %}

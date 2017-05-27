@@ -5,6 +5,15 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+namespace AppBundle\Controller;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+//use AppBundle\Model\Blog;
+use AppBundle\Entity\Blog;
+use AppBundle\Form\Type\BlogType;
 
 class DefaultController extends Controller
 {
@@ -16,7 +25,12 @@ class DefaultController extends Controller
         */
         public function homepageAction()
         {
-          return $this ->render('blog/homepage.html.twig');
+          $em = $this->get('doctrine.orm.entity_manager');
+          $repository = $em->getRepository(Blog::class);
+          $blogs = $repository->findAllForList();
+          return $this ->render('blog/homepage.html.twig',[
+              'blogs' => $blogs,
+          ]);
         }
 
 

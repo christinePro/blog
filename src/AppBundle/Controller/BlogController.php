@@ -89,4 +89,45 @@ class BlogController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/admin/blog/{id}/", name="blog_show_comment")
+     */
+     public function createCommentAction(Blog $blog_id)
+
+     {
+       $blog = $this->getBlog($blog_id);
+       $comment = new Comment();
+       $comment->setBlog($blog);
+       $form = $this->createForm(CommentType::class, $comment);
+       $form->handleRequest($request);
+
+       if ($form->isValid()) {
+         // TODO: Persist the comment entity
+
+         return $this->redirect($this->generateUrl('blog_bundle_blog_show', array(
+           'id' => $comment->getBlog()->getId())) .
+           '#comment-' . $comment->getId()
+         );
+       }
+       return $this->render('BlogBundleBlogBundle:Comment:create.html.twig', array(
+         'comment' => $comment,
+         'form' => $form->createView()
+       ));
+
+     }
+
+     protected function getBlog($blog_id)
+     {
+       $em = $this->getDoctrine()
+       ->getManager();
+
+       $blog = $em->getRepository('BlogBundleBlogBundle:Blog')->find($blog_id);
+
+       if (!$blog) {
+         throw $this->createNotFoundException('Unable to find Blog post.');
+       }
+
+       return $blog;
+     }
+
 }
